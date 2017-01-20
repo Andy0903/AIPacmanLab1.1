@@ -6,8 +6,6 @@ namespace Pacman
     abstract class Character : Entity
     {
         #region Member variables
-        protected int myFrameXIndex;
-        protected int myFrameYIndex;
         protected float myFrameTimeCounterMilliseconds;
         protected float myTimePerFrameMilliseconds;
         protected float myElapsedTime;
@@ -26,6 +24,9 @@ namespace Pacman
         #endregion
 
         #region Properties
+        public int FrameXIndex { get; set; }
+        public int FrameYIndex { get; set; }
+
         public int Column
         {
             get { return (int)Position.X / Tile.Size; }
@@ -65,10 +66,10 @@ namespace Pacman
             set;
         }
 
-        protected Direction Direction
+        public Direction Direction
         {
             get;
-            set;
+           protected set;
         }
 
         #endregion
@@ -174,8 +175,8 @@ namespace Pacman
             CalculateSourceRectangle(aGameTime);
 
             mySourceRectangle = new Rectangle(
-                (Size * myFrameXIndex) + (myXPadding * myFrameXIndex),
-                (Size * myFrameYIndex) + (myYPadding * myFrameYIndex),
+                (Size * FrameXIndex) + (myXPadding * FrameXIndex),
+                (Size * FrameYIndex) + (myYPadding * FrameYIndex),
                 Size,
                 Size);
         }
@@ -215,8 +216,8 @@ namespace Pacman
 
         private void SetDefaultValuesOnNonParameterMemberVariables()
         {
-            myFrameXIndex = 0;
-            myFrameYIndex = 0;
+            FrameXIndex = 0;
+            FrameYIndex = 0;
             myElapsedTime = 0;
 
             Rotation = 0;

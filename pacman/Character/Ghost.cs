@@ -10,10 +10,16 @@ namespace Pacman
         #region Member variables
         //GhostHealthState myGhostHealthState;
         IState myCurrentBehaviour;
-        protected readonly int myDefaultFrameYIndex;
+        public readonly int DEFAULT_FRAME_Y_INDEX;
         #endregion
 
         #region Properties
+        public ConsoleColor Color
+        {
+            get;
+            private set;
+        }
+
         public Player Player
         {
             get;
@@ -22,11 +28,11 @@ namespace Pacman
         #endregion
 
         #region Constructors
-        public Ghost(Player aPlayer, GameBoard aGameBoard, Vector2 aPosition, int aDefaultFrameYIndex)
+        public Ghost(Player aPlayer, GameBoard aGameBoard, Vector2 aPosition, int aDefaultFrameYIndex, ConsoleColor aColor)
             : base("Ghosts", aPosition, 32, 8, 5, 2, 1, 100, aGameBoard, 280)
         {
-            myDefaultFrameYIndex = aDefaultFrameYIndex;
-            InitializeMemberVariables(aPlayer);
+            DEFAULT_FRAME_Y_INDEX = aDefaultFrameYIndex;
+            InitializeMemberVariables(aPlayer, aColor);
         }
         #endregion
 
@@ -147,15 +153,16 @@ namespace Pacman
         #endregion
 
         #region Private methdos
-        private void InitializeMemberVariables(Player aPlayer)
+        private void InitializeMemberVariables(Player aPlayer, ConsoleColor aColor)
         {
-            InitializeParameterMemberVariables(aPlayer);
-            SetDefaultNonParameterMemberVariables();
+            InitializeParameterMemberVariables(aPlayer, aColor);
+            //SetDefaultNonParameterMemberVariables(); NOT NEEDED DUE TO RESET BEING CALLED.
         }
 
-        private void InitializeParameterMemberVariables(Player aPlayer)
+        private void InitializeParameterMemberVariables(Player aPlayer, ConsoleColor aColor)
         {
             Player = aPlayer;
+            Color = aColor;
         }
 
         private void SetDefaultNonParameterMemberVariables()
@@ -164,75 +171,75 @@ namespace Pacman
             ChangeState(new SAlive());
         }
 
-        private void ChangeState(IState aState)
+        public void ChangeState(IState aState)
         {
-            aState.Exit(this);
+            if (myCurrentBehaviour != null)
+            {
+                myCurrentBehaviour.Exit(this);
+            }
             myCurrentBehaviour = aState;
             aState.Enter(this);
         }
 
-        private void Collision()
-        {
-            //if (myGhostHealthState != GhostHealthState.Dead)
-            //{
-            //    if (CollisionWithPlayer())
-            //    {
-            //        switch (Player.PowerUp)
-            //        {
-            //            case PowerUpType.None:
-            //            case PowerUpType.WallUnlocker:
-            //                Player.GotEaten();
-            //                break;
-            //            case PowerUpType.GhostEater:
-            //                GotEaten();
-            //                break;
-            //        }
-            //    }
-            //}
-        }
+        //private void Collision()
+        //{
+        //    //if (myGhostHealthState != GhostHealthState.Dead)
+        //    //{
+        //    //    if (CollisionWithPlayer())
+        //    //    {
+        //    //        switch (Player.PowerUp)
+        //    //        {
+        //    //            case PowerUpType.None:
+        //    //            case PowerUpType.WallUnlocker:
+        //    //                Player.GotEaten();
+        //    //                break;
+        //    //            case PowerUpType.GhostEater:
+        //    //                GotEaten();
+        //    //                break;
+        //    //        }
+        //    //    }
+        //    //}
+        //}
 
-        private bool CollisionWithPlayer()
+        public bool CollisionWithPlayer()
         {
             if (Player.SizeHitbox.Intersects(SizeHitbox))
             {
                 return true;
             }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
-        private void UpdateHealthState()
-        {
-            if (myGhostHealthState != GhostHealthState.Dead)
-            {
-                switch (Player.PowerUp)
-                {
-                    case PowerUpType.None:
-                    case PowerUpType.WallUnlocker:
-                        myGhostHealthState = GhostHealthState.Alive;
-                        break;
-                    case PowerUpType.GhostEater:
-                        myGhostHealthState = GhostHealthState.Scared;
-                        break;
-                }
-            }
-            else
-            {
-                if (Position == SpawnPosition)
-                {
-                    myGhostHealthState = GhostHealthState.Alive;
-                }
-            }
-        }
+        //private void UpdateHealthState()
+        //{
+        //    //if (myGhostHealthState != GhostHealthState.Dead)
+        //    //{
+        //    //    switch (Player.PowerUp)
+        //    //    {
+        //    //        case PowerUpType.None:
+        //    //        case PowerUpType.WallUnlocker:
+        //    //            myGhostHealthState = GhostHealthState.Alive;
+        //    //            break;
+        //    //        case PowerUpType.GhostEater:
+        //    //            myGhostHealthState = GhostHealthState.Scared;
+        //    //            break;
+        //    //    }
+        //    //}
+        //    //else
+        //    //{
+        //    //    if (Position == SpawnPosition)
+        //    //    {
+        //    //        myGhostHealthState = GhostHealthState.Alive;
+        //    //    }
+        //    //}
+        //}
 
-        private void GotEaten()
-        {
-           // myGhostHealthState = GhostHealthState.Dead;
-            ChangeState(new SDead());
-           // SoundEffectManager.PlayGhostSound();
-        }
+        //public void GotEaten()
+        //{
+        //    // myGhostHealthState = GhostHealthState.Dead;
+        //    ChangeState(new SDead());
+        //    // SoundEffectManager.PlayGhostSound();
+        //}
 
         //private void ChangeSourceRectangleDead()
         //{

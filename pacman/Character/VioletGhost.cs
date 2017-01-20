@@ -8,7 +8,7 @@ namespace Pacman
     {
         #region Constructors
         public VioletGhost(Player aPlayer, GameBoard aGameBoard, Vector2 aPosition)
-            : base(aPlayer, aGameBoard, aPosition, 1)
+            : base(aPlayer, aGameBoard, aPosition, 1, ConsoleColor.DarkMagenta)
         {
         }
         #endregion

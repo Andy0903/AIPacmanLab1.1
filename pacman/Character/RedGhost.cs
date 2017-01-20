@@ -8,7 +8,7 @@ namespace Pacman
     {
         #region Constructors
         public RedGhost(Player aPlayer, GameBoard aGameBoard, Vector2 aPosition)
-            : base(aPlayer, aGameBoard, aPosition, 0)
+            : base(aPlayer, aGameBoard, aPosition, 0, ConsoleColor.Red)
         {
         }
         #endregion

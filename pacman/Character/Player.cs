@@ -157,27 +157,27 @@ namespace Pacman
 
         private void UpdateAliveAnimation(int aNumberOfDeathFrames)
         {
-            if (myFrameXIndex >= NumberOfXFrames - (1 + aNumberOfDeathFrames))
+            if (FrameXIndex >= NumberOfXFrames - (1 + aNumberOfDeathFrames))
             {
-                myFrameXIndex = 0;
+                FrameXIndex = 0;
             }
             else
             {
-                myFrameXIndex++;
+                FrameXIndex++;
             }
         }
 
         private void UpdateDeathAnimation(int aNumberOfDeathFrames)
         {
-            if (myFrameXIndex < NumberOfXFrames - aNumberOfDeathFrames)
+            if (FrameXIndex < NumberOfXFrames - aNumberOfDeathFrames)
             {
-                myFrameXIndex = 3;
+                FrameXIndex = 3;
             }
             else
             {
-                if (myFrameXIndex < NumberOfXFrames - 1)
+                if (FrameXIndex < NumberOfXFrames - 1)
                 {
-                    myFrameXIndex++;
+                    FrameXIndex++;
                 }
             }
         }
