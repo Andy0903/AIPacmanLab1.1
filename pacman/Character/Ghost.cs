@@ -9,7 +9,7 @@ namespace Pacman
     {
         #region Member variables
         //GhostHealthState myGhostHealthState;
-        IState myCurrentBehaviour;
+        IGhostState myCurrentBehaviour;
         public readonly int DEFAULT_FRAME_Y_INDEX;
         #endregion
 
@@ -171,7 +171,7 @@ namespace Pacman
             ChangeState(new SAlive());
         }
 
-        public void ChangeState(IState aState)
+        public void ChangeState(IGhostState aState)
         {
             if (myCurrentBehaviour != null)
             {

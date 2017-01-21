@@ -2,7 +2,7 @@
 
 namespace Pacman
 {
-    interface IState
+    interface IGhostState
     {
         void Enter(Ghost aGhost);
         Vector2? FindPath(Ghost aGhost);

@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 
 namespace Pacman
 {
-    class SScared : IState
+    class SScared : IGhostState
     {
         public void Enter(Ghost aGhost)
         {

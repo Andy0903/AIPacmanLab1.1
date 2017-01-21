@@ -3,7 +3,7 @@ using System;
 
 namespace Pacman
 {
-    class SDead : IState
+    class SDead : IGhostState
     {
         public void Enter(Ghost aGhost)
         {
